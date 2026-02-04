@@ -1,0 +1,17 @@
+services:
+  youtube-extractor:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./cookies.txt:/app/cookies.txt:ro
+      - ./downloads:/app/downloads
+      - ./transcription.txt:/app/transcription.txt
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
